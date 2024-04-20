@@ -7,6 +7,7 @@ import lombok.Data;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,5 +24,15 @@ public class Post {
     @NotNull
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createDate;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+    @OneToMany(mappedBy = "post" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comment> comments;
+    @OneToMany(mappedBy = "post" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Like> likes;
 
 }
